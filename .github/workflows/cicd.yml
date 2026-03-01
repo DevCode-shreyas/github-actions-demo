@@ -5,8 +5,7 @@ name: CICD
 # Manual click (deliver) workflow whenever user needs
 
 on:
-
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
 
@@ -21,7 +20,7 @@ jobs:
         run: echo "COde Clone from GitHub"
 
   build:
-
+    needs: [code]
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +30,7 @@ jobs:
         run: echo "Docker Container build"
 
   test:
-
+    needs: [build]
     runs-on: ubuntu-latest
 
     steps:
@@ -40,10 +39,8 @@ jobs:
 
         run: echo "Testing the container"
 
-        
-
   deploy:
-
+    needs: [build,test]
     runs-on: ubuntu-latest
 
     steps:
